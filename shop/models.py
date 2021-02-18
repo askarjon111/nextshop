@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.shortcuts import reverse
 from django.template.defaultfilters import slugify
-from ckeditor.fields import RichTextEditor
+# from ckeditor.fields import RichTextEditor
 
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=None, decimal_places=None)
-    seller = models.ForeignKey(User)
+    price = models.DecimalField(max_digits=200, decimal_places=20)
+    seller = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     brand_choices = [
        ('apple','apple'),
         ('samsung','samsung'),
@@ -34,7 +34,7 @@ class Product(models.Model):
     product_date = models.DateTimeField(default=datetime.now, blank=True)
     slug = models.SlugField()
 
-    description = RichTextEditor(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("product_detail", kwargs={"slug": self.slug})
@@ -44,5 +44,8 @@ class Product(models.Model):
             self.slug = slugify(self.title)
 
         super(Product, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
     
 

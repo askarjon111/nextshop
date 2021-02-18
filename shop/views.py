@@ -1,3 +1,11 @@
 from django.shortcuts import render
+from .models import *
 
-# Create your views here.
+def index(request):
+    products = Product.objects.order_by('-product_date').filter(in_stock=True)
+
+    context = {
+        'products' : products
+    }
+
+    return render(request, 'shop/index.html', context)
