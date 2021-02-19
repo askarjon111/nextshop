@@ -8,7 +8,7 @@ from django.template.defaultfilters import slugify
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=200, decimal_places=20)
+    price = models.IntegerField()
     seller = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     brand_choices = [
        ('apple','apple'),
