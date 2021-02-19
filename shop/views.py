@@ -9,3 +9,12 @@ def index(request):
     }
 
     return render(request, 'shop/index.html', context)
+
+def product_detail(request, slug):
+    product = Product.objects.get(slug=slug)
+
+    context = {
+        'product': product
+    }
+
+    return render(request, '../templates/shop/product_detail.html', context)
